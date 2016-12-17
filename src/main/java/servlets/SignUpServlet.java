@@ -15,5 +15,17 @@ public class SignUpServlet extends HttpServlet {
         this.accountService = accountService;
     }
 
+    public void doGet (HttpServletRequest request,
+                       HttpServletResponse response) throws ServletException, IOException {
+                               
+    }
 
+    public void doPost (HttpServletRequest request,
+                       HttpServletResponse response) throws ServletException, IOException {
+        String login = request.getParameters("login");
+        String password = request.getParametr("password");
+        
+        
+    }   
+    
 }
