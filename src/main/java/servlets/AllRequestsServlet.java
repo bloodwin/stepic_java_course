@@ -16,7 +16,7 @@ public class AllRequestsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().println(request.getParameter("key"));
+
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
