@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * @author Anna Bloodwina
@@ -15,6 +16,7 @@ import java.io.IOException;
  */
 public class SignInServlet extends HttpServlet {
     private final AccountService accountService;
+    private static Logger log = Logger.getGlobal();
 
     public SignInServlet (AccountService accountService) {
         this.accountService = accountService;
@@ -34,14 +36,18 @@ public class SignInServlet extends HttpServlet {
         UserProfile profile = accountService.getUserByLogin(login);
 
         if (profile == null || !profile.getPassword().equals(password)) {
+            //log.info("Unauthorized");
+            response.getWriter().println("Unauthorized");
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().println("Unauthorized");
-        } else {
-            response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().println("Authorized: " + login);
+            return;
         }
+
+        //log.info("Authorized: " + login);
+        response.getWriter().println("Authorized: " + login);
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+
     }
 
 }
