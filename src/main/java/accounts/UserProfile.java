@@ -8,16 +8,22 @@ public class UserProfile {
     private String login;
     private String password;
     private String email;
+    private long id;
 
     public UserProfile(String login, String pass, String email) {
         this.login = login;
         this.password = pass;
         this.email = email;
     }
+
     public UserProfile(String login) {
         this.login = login;
         this.password = login;
         this.email = login;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getLogin() {

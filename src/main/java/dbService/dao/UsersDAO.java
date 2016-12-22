@@ -11,11 +11,11 @@ import org.hibernate.criterion.Restrictions;
  * @author Anna Bloodwina
  * @version 1.0.201612221505
  */
-public class UserDAO {
+public class UsersDAO {
 
     private Session session;
 
-    public UserDAO(Session session) { this.session = session; }
+    public UsersDAO(Session session) { this.session = session; }
 
     public UsersDataSet get(long id) throws HibernateException {
         return (UsersDataSet) session.get(UsersDataSet.class, id);
@@ -28,5 +28,9 @@ public class UserDAO {
 
     public long insertUser(String name) throws HibernateException {
         return (Long) session.save(new UsersDataSet(name));
+    }
+
+    public long insertPassword(String name, String password) {
+        return (Long) session.save(new UsersDataSet(name, password));
     }
 }
