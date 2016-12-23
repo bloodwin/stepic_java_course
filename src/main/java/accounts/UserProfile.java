@@ -10,6 +10,9 @@ public class UserProfile {
     private String email;
     private long id;
 
+    public UserProfile(){
+    }
+
     public UserProfile(String login, String pass, String email) {
         this.login = login;
         this.password = pass;
@@ -24,6 +27,10 @@ public class UserProfile {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getId() {
+        return this.id;
     }
 
     public String getLogin() {

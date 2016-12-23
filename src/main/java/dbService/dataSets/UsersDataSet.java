@@ -64,7 +64,9 @@ public class UsersDataSet implements Serializable { // Serializable Important to
 
     public String getPassword() { return password; }
 
-    public void setPassword(String password) { this.password = password; }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 
     @Override

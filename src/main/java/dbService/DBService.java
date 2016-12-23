@@ -13,6 +13,7 @@ import org.hibernate.service.ServiceRegistry;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 /**
  * @author Anna Bloodwina
@@ -23,6 +24,8 @@ public class DBService {
     private static final String hibernate_hbm2ddl_auto = "update";
 
     private final SessionFactory sessionFactory;
+
+    private static Logger log = Logger.getGlobal();
 
     public DBService() {
         Configuration configuration = getH2Configuration();
@@ -75,7 +78,11 @@ public class DBService {
         try {
             Session session = sessionFactory.openSession();
             UsersDAO dao = new UsersDAO(session);
-            UsersDataSet dataSet = dao.get(dao.getUserId(login));
+            Long id = dao.getUserId(login);
+            if (id == null) {
+                return null;
+            }
+            UsersDataSet dataSet = dao.get(id);
             session.close();
             return dataSet;
         } catch (HibernateException e) {
@@ -108,19 +115,6 @@ public class DBService {
             return id;
         } catch (HibernateException e) {
             throw new DBException(e);
-        }
-    }
-
-    public void printConnectInfo() {
-        try {
-            SessionFactoryImpl sessionFactoryImpl = (SessionFactoryImpl) sessionFactory;
-            Connection connection = sessionFactoryImpl.getConnectionProvider().getConnection();
-            System.out.println("DB name: " + connection.getMetaData().getDatabaseProductName());
-            System.out.println("DB version: " + connection.getMetaData().getDatabaseProductVersion());
-            System.out.println("Driver: " + connection.getMetaData().getDriverName());
-            System.out.println("Autocommit: " + connection.getAutoCommit());
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 

@@ -15,15 +15,21 @@ public class UsersDAO {
 
     private Session session;
 
+    //private EntityManager em = HibernateUtil.getEm();
+
     public UsersDAO(Session session) { this.session = session; }
 
     public UsersDataSet get(long id) throws HibernateException {
         return (UsersDataSet) session.get(UsersDataSet.class, id);
     }
 
-    public long getUserId(String name) throws HibernateException {
+    public Long getUserId(String name) throws HibernateException {
         Criteria criteria = session.createCriteria(UsersDataSet.class);
-        return ((UsersDataSet) criteria.add(Restrictions.eq("name", name)).uniqueResult()).getId();
+        UsersDataSet usersDataSet = (UsersDataSet) criteria.add(Restrictions.eq("name", name)).uniqueResult();
+        if (usersDataSet == null) {
+            return null;
+        }
+        return usersDataSet.getId();
     }
 
     public long insertUser(String name) throws HibernateException {

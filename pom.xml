@@ -9,9 +9,9 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <com.h2database.h2.version>1.4.187</com.h2database.h2.version>
+        <com.h2database.h2.version>1.4.193</com.h2database.h2.version>
         <mysql.mysql-connector-java.version>5.1.35</mysql.mysql-connector-java.version>
-        <org.hibernate.hibernate-core.version>4.3.10.Final</org.hibernate.hibernate-core.version>
+        <org.hibernate.hibernate-core.version>5.2.5.Final</org.hibernate.hibernate-core.version>
     </properties>
 
     <build>

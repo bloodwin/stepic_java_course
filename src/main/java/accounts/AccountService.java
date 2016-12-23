@@ -8,6 +8,7 @@ import dbService.dataSets.UsersDataSet;
 import javax.jws.soap.SOAPBinding;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * @author Anna Bloodwina
@@ -17,6 +18,8 @@ public class AccountService  {
     private final Map<String, UserProfile> loginToProfile;
     private final Map<String, UserProfile> sessionIdToProfile;
     private final DBService dbService;
+
+    private static Logger log = Logger.getGlobal();
 
     public AccountService() {
         loginToProfile = new HashMap<>();
@@ -29,13 +32,13 @@ public class AccountService  {
         String name = userProfile.getLogin();
         String password = userProfile.getPassword();
 
-        long id;
+        UserProfile userInDB = getUserByLogin(name);
 
-        if (password == null) {
-            id = dbService.addUser(name);
+        if (!(userInDB == null)) {
+            return;
         }
 
-        id = dbService.addUser(name, password);
+        long id = dbService.addUser(name, password);
 
         userProfile.setId(id);
 
@@ -47,6 +50,10 @@ public class AccountService  {
         //UserProfile profile = loginToProfile.get(login);
 
         UsersDataSet usersData = dbService.getUserByLogin(login);
+
+        if (usersData ==null) {
+            return null;
+        }
 
         UserProfile profile = new UserProfile(usersData.getName(),
                                               usersData.getPassword(),
